@@ -551,11 +551,8 @@ function sendWhatsApp() {
     closeModal("checkoutModal");
     $("successName").textContent = name;
     openModal("successModal");
-
-    // Limpa o carrinho após o envio
-    cart = [];
-    saveCart();
-    renderCart();
+    
+    // O carrinho NÃO é limpo aqui. Ele será limpo no botão de fechar da tela de sucesso.
 }
 
 /* =========================================
@@ -675,6 +672,17 @@ function setupEvents() {
         phoneInput.addEventListener("input", (e) => {
             let x = e.target.value.replace(/\D/g, '').match(/(\d{0,2})(\d{0,5})(\d{0,4})/);
             e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
+        });
+    }
+
+    // Evento para fechar a tela de sucesso e limpar o carrinho
+    const closeSuccessBtn = $("closeSuccessBtn");
+    if (closeSuccessBtn) {
+        closeSuccessBtn.addEventListener("click", () => {
+            closeModal("successModal");
+            cart = []; // Esvazia o carrinho
+            saveCart(); // Salva no navegador
+            renderCart(); // Atualiza a tela
         });
     }
 }
