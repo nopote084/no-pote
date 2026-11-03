@@ -1,0 +1,631 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#c9090d">
+  <meta name="description" content="No Pote: cachorro-quente no pote. Confira nosso cardápio e peça pelo WhatsApp.">
+
+  <title>No Pote | Sabor que cabe no pote</title>
+
+  <link rel="icon" type="image/jpeg" href="assets/logo.jpeg">
+
+   <link rel="apple-touch-icon" href="assets/logo.jpeg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Pacifico&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <div class="top-strip">
+    🌭 Sabor que cabe no pote, bomba no sabor!
+  </div>
+
+  <header class="site-header">
+    <a class="brand" href="#inicio">
+      <img src="assets/logo.jpeg" alt="Logo No Pote">
+      <span>No <b>Pote</b></span>
+    </a>
+
+    <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu">
+      ☰
+    </button>
+
+    <nav id="mainNav">
+      <a href="#inicio">Início</a>
+      <a href="#cardapio">Cardápio</a>
+      <a href="#sobre">Nossa história</a>
+      <a href="#contato">Contato</a>
+      <a class="nav-order" href="#cardapio">Peça agora ↗</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- APRESENTAÇÃO -->
+    <section class="hero" id="inicio">
+
+      <div class="hero-copy">
+        <span class="eyebrow">
+          SEU CACHORRO-QUENTE, DE UM JEITO DIFERENTE
+        </span>
+
+        <h1>
+          O sabor que<br>
+          <em>cabe no pote!</em>
+        </h1>
+
+        <p>
+          Prático para levar, gostoso de verdade e preparado
+          para deixar seu dia mais saboroso.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#cardapio" class="btn btn-yellow">
+            Ver cardápio →
+          </a>
+
+          <a href="#sobre" class="btn btn-outline">
+            Conheça o No Pote
+          </a>
+        </div>
+
+        <div class="hero-note">
+          <span>★ ★ ★</span>
+          Feito com carinho em cada camada.
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="hero-glow"></div>
+
+        <img
+          src="assets/logo.jpeg"
+          alt="Identidade visual No Pote"
+        >
+
+        <div class="floating-tag">
+          Muito sabor<br>em cada pote!
+        </div>
+      </div>
+
+    </section>
+
+    <!-- DIFERENCIAIS -->
+    <section class="benefits">
+
+      <div>
+        <span class="benefit-icon">🥔</span>
+        <div>
+          <b>Acompanhamento</b>
+          <small>Batata palha + molho especial</small>
+        </div>
+      </div>
+
+      <div>
+        <span class="benefit-icon">❤️</span>
+        <div>
+          <b>Feito com carinho</b>
+          <small>Camadas de muito sabor</small>
+        </div>
+      </div>
+
+      <div>
+        <span class="benefit-icon">🛵</span>
+        <div>
+          <b>Entrega</b>
+          <small>Consulte a taxa da sua região</small>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- CARDÁPIO -->
+    <section class="menu-section section-wrap" id="cardapio">
+
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow red">ESCOLHA O SEU FAVORITO</span>
+          <h2>Nosso <em>cardápio</em></h2>
+        </div>
+
+        <p>
+          Escolha o tamanho, o sabor e monte seu pedido.
+          É rapidinho!
+        </p>
+      </div>
+
+      <!-- MINI POTE -->
+      <div class="size-heading">
+        <span>01</span>
+
+        <div>
+          <h3>Mini Pote <small>140ml</small></h3>
+          <p>Pequeno no tamanho, gigante no sabor.</p>
+        </div>
+
+        <b class="size-price">R$ 5,00</b>
+      </div>
+
+      <div class="product-grid" id="miniProducts"></div>
+
+      <!-- 350ML -->
+      <div class="size-heading second">
+        <span>02</span>
+
+        <div>
+          <h3>No Pote <small>350ml</small></h3>
+          <p>O tamanho ideal para matar a vontade.</p>
+        </div>
+
+        <b class="size-price">A partir de R$ 15,00</b>
+      </div>
+
+      <div class="product-grid" id="regularProducts"></div>
+
+      <!-- 750ML -->
+      <div class="size-heading second">
+        <span>03</span>
+
+        <div>
+          <h3>Monte seu No Pote <small>750ml</small></h3>
+          <p>Escolha até 3 sabores no mesmo pote.</p>
+        </div>
+
+        <b class="size-price">R$ 20,00</b>
+      </div>
+
+      <article class="custom-card">
+
+                <div class="custom-art">
+          <img
+            src="assets/pote-750.jpeg"
+            alt="No Pote de 750ml"
+            class="custom-pot-image"
+            onerror="this.style.display='none'; this.parentElement.style.background='#ffce08';"
+          >
+          <b>3 sabores<br>em um só pote!</b>
+        </div>
+
+        <div class="custom-info">
+          <span class="pill">750ml • até 3 sabores</span>
+
+          <h3>Do seu jeito!</h3>
+
+          <p>
+            Combine seus sabores favoritos e crie
+            uma mistura só sua.
+          </p>
+
+          <button class="btn btn-yellow" id="customButton" type="button">
+            Montar meu pote →
+          </button>
+        </div>
+
+        <strong class="custom-price">R$ 20,00</strong>
+
+      </article>
+
+      <!-- ACOMPANHAMENTOS -->
+      <div class="accompaniment">
+
+        <div class="accomp-title">
+          <span>🍟</span>
+
+          <div>
+            <b>Todo No Pote vem com acompanhamento!</b>
+            <small>
+              Escolha suas opções grátis na hora de montar o pedido.
+            </small>
+          </div>
+        </div>
+
+        <div class="accomp-options">
+
+          <div>
+            <b>Batata palha</b>
+            <small>Crocância para completar seu pote.</small>
+          </div>
+
+          <div>
+            <b>Molho especial</b>
+            <small>
+              Mostarda, maionese, pimenta calabresa,
+              lemon pepper e limão.
+            </small>
+          </div>
+
+        </div>
+
+        <p>
+          Quer uma porção extra de batata palha ou molho especial?
+          <b>+ R$ 2,00 cada.</b>
+        </p>
+
+      </div>
+
+    </section>
+
+    <!-- SOBRE -->
+    <section class="about-section" id="sobre">
+
+      <div class="about-image">
+        <img
+          src="assets/sobre-no-pote.jpeg"
+          alt="A história do No Pote"
+        >
+      </div>
+
+      <div class="about-copy">
+
+        <span class="eyebrow red">UM POUQUINHO DA GENTE</span>
+
+        <h2>
+          Uma ideia simples.<br>
+          <em>Um sabor especial.</em>
+        </h2>
+
+        <p>
+          O No Pote surgiu de uma ideia simples:
+          deixar o seu cachorro-quente mais prático,
+          gostoso e fácil de levar para qualquer lugar.
+        </p>
+
+        <p>
+          A receita combina purê de batata, pão e nosso
+          tradicional molho vermelho. E a família de
+          sabores cresceu: agora também temos Frango
+          Cremoso e Calabresa. Logo mais, novidades por aqui!
+        </p>
+
+        <a href="#cardapio" class="btn btn-yellow">
+          Experimente o seu →
+        </a>
+
+      </div>
+
+    </section>
+
+    <!-- DELIVERY -->
+    <section class="delivery-banner">
+
+      <div>
+        <span>🛵</span>
+
+        <div>
+          <h2>Vamos até você!</h2>
+          <p>
+            As entregas são feitas por Uber Entrega.
+            Consulte a taxa para sua região no WhatsApp.
+          </p>
+        </div>
+      </div>
+
+      <a
+        class="btn btn-light"
+        href="https://wa.me/5584981921744?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20quero%20fazer%20um%20pedido."
+        target="_blank"
+        rel="noopener"
+      >
+        Falar no WhatsApp ↗
+      </a>
+
+    </section>
+
+  </main>
+
+  <!-- RODAPÉ -->
+  <footer id="contato">
+
+    <div class="footer-brand">
+      <img src="assets/logo.jpeg" alt="No Pote">
+
+      <div>
+        <b>No Pote</b>
+        <small>Sabor que cabe no pote, bomba no sabor!</small>
+      </div>
+    </div>
+
+    <div class="footer-contact">
+
+      <a href="https://wa.me/5584981921744?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20quero%20fazer%20um%20pedido." target="_blank">
+        <span>◉</span>
+        <div>
+          <small>WhatsApp</small>
+          <b>(84) 98192-1744</b>
+        </div>
+      </a>
+
+      <a href="https://instagram.com/no.pote.084" target="_blank">
+        <span>◎</span>
+        <div>
+          <small>Instagram</small>
+          <b>@no.pote.084</b>
+        </div>
+      </a>
+
+      <div>
+        <span>◇</span>
+        <div>
+          <small>Chave Pix</small>
+          <b>no.pote.084@gmail.com</b>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="copyright">
+      © <span id="year"></span> No Pote.
+      Feito com ❤️ e muito sabor.
+    </div>
+
+  </footer>
+
+  <!-- BOTÃO DO CARRINHO -->
+  <button class="cart-fab" id="cartFab">
+    <span>🛒</span>
+    <b id="cartCount">0</b>
+    <strong>Meu pedido</strong>
+    <i id="cartTotal">R$ 0,00</i>
+  </button>
+
+  <!-- MODAL DO PRODUTO -->
+  <div class="modal-backdrop" id="productModal">
+
+    <section class="modal product-modal">
+
+      <button class="modal-close" data-close="productModal">×</button>
+
+      <div class="modal-head">
+        <span class="modal-kicker">MONTE DO SEU JEITO</span>
+        <h2 id="modalTitle">Seu No Pote</h2>
+        <p id="modalDescription"></p>
+      </div>
+
+      <div class="modal-body">
+
+        <div class="field-block">
+          <div class="field-title">Quantidade</div>
+
+          <div class="quantity-control">
+            <button id="qtyMinus">−</button>
+            <b id="modalQty">1</b>
+            <button id="qtyPlus">+</button>
+          </div>
+        </div>
+
+        <div class="field-block">
+          <div class="field-title">
+            Escolha o(s) sabor(es)
+            <small id="flavorLimit"></small>
+          </div>
+
+          <div id="flavorChoices" class="choice-list"></div>
+        </div>
+
+        <div class="field-block">
+          <div class="field-title">
+            Acompanhamentos grátis
+            <small>Marque os que deseja</small>
+          </div>
+
+          <label class="check-row">
+            <span>
+              <b>Batata palha</b>
+              <small>Porção tradicional</small>
+            </span>
+            <input type="checkbox" id="freePotato" checked>
+            <i></i>
+          </label>
+
+          <label class="check-row">
+            <span>
+              <b>Molho especial</b>
+              <small>Mostarda, maionese, pimenta, lemon pepper e limão</small>
+            </span>
+            <input type="checkbox" id="freeSauce" checked>
+            <i></i>
+          </label>
+        </div>
+
+        <div class="field-block">
+          <div class="field-title">
+            Quer porção extra?
+            <small>R$ 2,00 cada</small>
+          </div>
+
+          <label class="check-row">
+            <span>
+              <b>Batata palha extra</b>
+              <small>+ R$ 2,00</small>
+            </span>
+            <input type="checkbox" id="extraPotato">
+            <i></i>
+          </label>
+
+          <label class="check-row">
+            <span>
+              <b>Molho especial extra</b>
+              <small>+ R$ 2,00</small>
+            </span>
+            <input type="checkbox" id="extraSauce">
+            <i></i>
+          </label>
+        </div>
+
+        <div class="field-block">
+          <label class="field-title" for="itemNote">
+            Observação <small>opcional</small>
+          </label>
+
+          <textarea
+            id="itemNote"
+            rows="2"
+            placeholder="Ex.: caprichar no molho..."
+          ></textarea>
+        </div>
+
+      </div>
+
+      <div class="modal-bottom">
+        <div>
+          <small>Subtotal deste item</small>
+          <b id="modalPrice">R$ 0,00</b>
+        </div>
+
+        <button class="btn btn-red" id="addToCart">
+          Adicionar ao carrinho
+        </button>
+      </div>
+
+    </section>
+
+  </div>
+
+  <!-- MODAL DO CARRINHO -->
+  <div class="modal-backdrop" id="cartModal">
+
+    <section class="modal cart-modal">
+
+      <button class="modal-close" data-close="cartModal">×</button>
+
+      <div class="modal-head">
+        <span class="modal-kicker">ESTÁ QUASE!</span>
+        <h2>Seu pedido</h2>
+        <p>Confira os itens antes de continuar.</p>
+      </div>
+
+      <div class="cart-items" id="cartItems"></div>
+
+      <div class="cart-summary">
+        <span>Subtotal</span>
+        <b id="cartSubtotal">R$ 0,00</b>
+
+        <small>
+          Entrega por Uber Entrega: consulte a taxa pelo WhatsApp.
+        </small>
+
+        <div>
+          <strong>Total dos produtos</strong>
+          <strong id="cartGrandTotal">R$ 0,00</strong>
+        </div>
+      </div>
+
+      <div class="cart-actions">
+        <button class="btn btn-light-dark" data-close="cartModal">
+          Continuar comprando
+        </button>
+
+        <button class="btn btn-red" id="goCheckout">
+          Ir para confirmação →
+        </button>
+      </div>
+
+    </section>
+
+  </div>
+
+  <!-- CONFIRMAÇÃO E PIX -->
+  <div class="modal-backdrop" id="checkoutModal">
+
+    <section class="modal checkout-modal">
+
+      <button class="modal-close" data-close="checkoutModal">×</button>
+
+      <div class="modal-head">
+        <span class="modal-kicker">ÚLTIMO PASSO</span>
+        <h2>Confirme seu pedido</h2>
+        <p>
+          Preencha seus dados e faça o Pix.
+          Depois, envie o pedido pelo WhatsApp.
+        </p>
+      </div>
+
+      <div class="checkout-body">
+
+        <label>
+          Seu nome
+          <input id="customerName" type="text" placeholder="Como podemos te chamar?">
+        </label>
+
+                <label>
+          Bairro (para calcular a entrega)
+          <select id="customerNeighborhood">
+           <option value="0">Não sei meu bairro / Combinar no WhatsApp</option>
+            <option value="5">Potengi / Pajuçara (+ R$ 5,00)</option>
+            <option value="8">Lagoa Azul / Cidade Praia / N. Sra. da Apresentação (+ R$ 8,00)</option>
+            <option value="10">Redinha / Salinas (+ R$ 10,00)</option>
+            <option value="14">Amarante / Sto. Antônio / São Gonçalo (+ R$ 14,00)</option>
+          </select>
+        </label>
+
+        <label>
+          Endereço e Ponto de Referência
+          <input id="customerAddress" type="text" placeholder="Rua, número e referência">
+        </label>
+
+        <label>
+          Forma de recebimento
+          <select id="deliveryType">
+            <option value="Entrega">Entrega (Uber Entrega — taxa a consultar)</option>
+            <option value="Retirada">Vou combinar a retirada</option>
+          </select>
+        </label>
+
+        <div class="pix-box">
+          <span class="pix-label">PAGAMENTO VIA PIX</span>
+
+          <small>Chave Pix (e-mail)</small>
+
+          <div class="pix-key">
+            <b>no.pote.084@gmail.com</b>
+            <button id="copyPix">Copiar</button>
+          </div>
+
+           <p>
+            Produtos: <b id="pixProducts">R$ 0,00</b><br>
+            Entrega: <b id="pixDelivery">R$ 0,00</b><br>
+            <span style="font-size: 1.1em; color: var(--red); font-weight: 900; margin-top: 5px; display: inline-block;">
+              TOTAL A PAGAR: <b id="pixAmount">R$ 0,00</b>
+            </span>
+          </p>
+
+          <small>
+            O valor acima já inclui a taxa de entrega selecionada.
+          </small>
+        </div>
+
+        <label>
+          Observação do pedido
+          <textarea id="orderNote" rows="2" placeholder="Alguma informação importante?"></textarea>
+        </label>
+
+      </div>
+
+      <div class="checkout-bottom">
+        <button class="btn btn-red" id="sendWhatsApp">
+          Já paguei — enviar pedido no WhatsApp ↗
+        </button>
+
+        <small>
+          O site não confirma o pagamento automaticamente.
+          Envie o comprovante na conversa do WhatsApp.
+        </small>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="toast" id="toast" role="status"></div>
+
+  <script src="script.js" defer></script>
+
+</body>
+</html>
