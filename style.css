@@ -1721,3 +1721,16 @@ textarea:focus,
   }
 
 }
+
+
+
+
+
+/* Ajuste para a tela de sucesso */
+.success-modal {
+  max-width: 400px;
+}
+
+.success-modal h2 {
+  font-size: 2rem;
+}
