@@ -625,7 +625,7 @@
     </section>
 
   </div>
-    <!-- TELA DE SUCESSO -->
+   <!-- TELA DE SUCESSO -->
   <div class="modal-backdrop" id="successModal">
     <section class="modal success-modal" style="text-align: center; padding: 40px 20px;">
       <div style="font-size: 4rem; margin-bottom: 15px;">🎉</div>
@@ -635,12 +635,13 @@
         Seu pedido foi aberto no WhatsApp.<br><br>
         <b style="color: var(--red);">Não esqueça de enviar o comprovante!</b>
       </p>
-      <button class="btn btn-red" onclick="document.getElementById('successModal').classList.remove('open'); document.body.classList.remove('modal-open');" style="width: 100%;">
+      
+      <!-- BOTÃO ALTERADO AQUI -->
+      <button class="btn btn-red" id="closeSuccessBtn" style="width: 100%;">
         Fechar e continuar
       </button>
     </section>
   </div>
-
   <div class="toast" id="toast" role="status"></div>
 
   <div class="toast" id="toast" role="status"></div>
