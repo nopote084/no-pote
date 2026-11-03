@@ -2,7 +2,7 @@
 
 /* =========================================
    NO POTE - JAVASCRIPT CORRIGIDO
-   Com salvamento de preferências e WhatsApp
+   Com salvamento de preferências, celular e WhatsApp
 ========================================= */
 
 const WHATSAPP = "5584981921744";
@@ -92,6 +92,7 @@ let quantity = 1;
 let selectedFlavors = [];
 let is750 = false;
 let deliveryFee = 0;
+
 /* =========================================
    FUNÇÕES AUXILIARES
 ========================================= */
@@ -419,6 +420,7 @@ function renderCart() {
         </article>
     `).join("");
 }
+
 function changeCartItem(key, amount) {
     const item = cart.find(p => p.key === key);
     if (!item) return;
@@ -444,6 +446,7 @@ function openCheckout() {
     const saved = loadCustomer();
     if (saved) {
         $("customerName").value = saved.name || "";
+        $("customerPhone").value = saved.phone || ""; // Carrega celular
         $("customerAddress").value = saved.address || "";
         $("deliveryType").value = saved.delivery || "Entrega";
         $("orderNote").value = saved.orderNote || "";
@@ -473,7 +476,9 @@ function sendWhatsApp() {
         showToast("Seu carrinho está vazio!");
         return;
     }
+    
     const name = $("customerName").value.trim();
+    const phone = $("customerPhone").value.trim(); // Pega o celular
     const address = $("customerAddress").value.trim();
     const delivery = $("deliveryType").value;
     const orderNote = $("orderNote").value.trim();
@@ -485,19 +490,28 @@ function sendWhatsApp() {
         $("customerName").focus();
         return;
     }
+
+    // Valida o celular
+    if (!phone) {
+        showToast("Informe seu celular!");
+        $("customerPhone").focus();
+        return;
+    }
+
     if (delivery === "Entrega" && !address) {
         showToast("Informe o endereço de entrega!");
         $("customerAddress").focus();
         return;
     }
 
-    // Salva dados do cliente (incluindo o bairro)
-    saveCustomer({ name, address, delivery, orderNote, neighborhood: neighborhoodValue });
+    // Salva dados do cliente (incluindo o celular)
+    saveCustomer({ name, phone, address, delivery, orderNote, neighborhood: neighborhoodValue });
 
     const totalComEntrega = cartTotal() + deliveryFee;
 
     let message = "*NOVO PEDIDO - NO POTE*\n\n";
     message += `Cliente: ${name}\n`;
+    message += `Celular: ${phone}\n`; // Envia o celular na mensagem
     message += `Recebimento: ${delivery}\n`;
     if (delivery === "Entrega") {
         message += `Bairro: ${neighborhoodText}\n`;
@@ -532,6 +546,16 @@ function sendWhatsApp() {
 
     const url = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(message)}`;
     window.open(url, "_blank", "noopener,noreferrer");
+
+    // --- LÓGICA DA TELA DE SUCESSO ---
+    closeModal("checkoutModal");
+    $("successName").textContent = name;
+    openModal("successModal");
+
+    // Limpa o carrinho após o envio
+    cart = [];
+    saveCart();
+    renderCart();
 }
 
 /* =========================================
@@ -633,6 +657,7 @@ function setupEvents() {
             });
         });
     }
+    
     // Evento para recalcular quando mudar o bairro
     const neighborhoodSelect = $("customerNeighborhood");
     if (neighborhoodSelect) {
@@ -643,10 +668,16 @@ function setupEvents() {
             $("pixAmount").textContent = money(cartTotal() + deliveryFee);
         });
     }
+
+    // Máscara para o campo de celular
+    const phoneInput = $("customerPhone");
+    if (phoneInput) {
+        phoneInput.addEventListener("input", (e) => {
+            let x = e.target.value.replace(/\D/g, '').match(/(\d{0,2})(\d{0,5})(\d{0,4})/);
+            e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
+        });
+    }
 }
-
-
-    
 
 /* =========================================
    INICIALIZAÇÃO
