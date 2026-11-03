@@ -553,7 +553,10 @@
           Seu nome
           <input id="customerName" type="text" placeholder="Como podemos te chamar?">
         </label>
-
+        <label>
+          Celular / WhatsApp
+          <input id="customerPhone" type="tel" placeholder="(84) 99999-9999" maxlength="15">
+        </label>
                 <label>
           Bairro (para calcular a entrega)
           <select id="customerNeighborhood">
@@ -622,6 +625,23 @@
     </section>
 
   </div>
+    <!-- TELA DE SUCESSO -->
+  <div class="modal-backdrop" id="successModal">
+    <section class="modal success-modal" style="text-align: center; padding: 40px 20px;">
+      <div style="font-size: 4rem; margin-bottom: 15px;">🎉</div>
+      <h2 style="color: var(--red); margin-bottom: 10px;">Pedido Enviado!</h2>
+      <p style="color: var(--muted); margin-bottom: 25px; font-size: 1.1rem;">
+        Tudo certo, <b id="successName"></b>!<br>
+        Seu pedido foi aberto no WhatsApp.<br><br>
+        <b style="color: var(--red);">Não esqueça de enviar o comprovante!</b>
+      </p>
+      <button class="btn btn-red" onclick="document.getElementById('successModal').classList.remove('open'); document.body.classList.remove('modal-open');" style="width: 100%;">
+        Fechar e continuar
+      </button>
+    </section>
+  </div>
+
+  <div class="toast" id="toast" role="status"></div>
 
   <div class="toast" id="toast" role="status"></div>
 
