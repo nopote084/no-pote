@@ -1734,3 +1734,49 @@ textarea:focus,
 .success-modal h2 {
   font-size: 2rem;
 }
+
+
+/* ========================================
+   HORÁRIOS DE FUNCIONAMENTO (RODAPÉ)
+======================================== */
+
+.footer-hours {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 15px 20px;
+  border-radius: 12px;
+  margin-bottom: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.hours-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.hours-item > span {
+  font-size: 1.5rem;
+}
+
+.hours-item b {
+  display: block;
+  font-size: 1rem;
+  color: var(--yellow);
+}
+
+.hours-item small {
+  display: block;
+  font-size: 0.85rem;
+  color: #ffe4a1;
+}
+
+/* Ajuste para celular */
+@media (max-width: 650px) {
+  .footer-hours {
+    flex-direction: column;
+    gap: 15px;
+  }
+}
