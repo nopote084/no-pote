@@ -207,25 +207,54 @@ async function calcularFretePeloCEP(cep) {
             const clienteLat = parseFloat(data[0].lat);
             const clienteLng = parseFloat(data[0].lon);
 
-            const origem = isSaoGoncalo ? ENDERECO_2 : ENDERECO_1;
-            const nomeOrigem = isSaoGoncalo ? "São Gonçalo" : "Potengi";
-
-            const distancia = calcularDistancia(origem.lat, origem.lng, clienteLat, clienteLng);
-            deliveryFee = calcularFretePorDistancia(distancia);
-
-            $("pixProducts").textContent = money(cartTotal());
-            $("pixDelivery").textContent = money(deliveryFee);
-            $("pixAmount").textContent = money(cartTotal() + deliveryFee);
-
-            showToast(`Frete: R$ ${deliveryFee.toFixed(2)} (Saindo de ${nomeOrigem})`);
+            calcularEFinalizarFrete(clienteLat, clienteLng);
         } else {
-            showToast("Não foi possível achar a localização exata. Tente novamente.");
+            showToast("Rua não encontrada. Use o botão 'Usar minha localização'.");
         }
     } catch (error) {
         console.error(error);
-        showToast("Erro de conexão. Verifique sua internet.");
+        showToast("Erro de conexão. Tente usar a localização.");
     }
 }
+
+// NOVA FUNÇÃO: Pega o GPS real do celular/computador do cliente
+function calcularFretePeloGPS() {
+    if (!navigator.geolocation) {
+        showToast("Seu navegador não suporta GPS.");
+        return;
+    }
+
+    showToast("Buscando sua localização exata...");
+    
+    navigator.geolocation.getCurrentPosition(
+        (position) => {
+            const clienteLat = position.coords.latitude;
+            const clienteLng = position.coords.longitude;
+            calcularEFinalizarFrete(clienteLat, clienteLng);
+        },
+        (error) => {
+            showToast("Não foi possível obter o GPS. Permita o acesso.");
+            console.error(error);
+        },
+        { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+    );
+}
+
+// Função auxiliar para calcular a distância e atualizar a tela
+function calcularEFinalizarFrete(clienteLat, clienteLng) {
+    const origem = isSaoGoncalo ? ENDERECO_2 : ENDERECO_1;
+    const nomeOrigem = isSaoGoncalo ? "São Gonçalo" : "Potengi";
+
+    const distancia = calcularDistancia(origem.lat, origem.lng, clienteLat, clienteLng);
+    deliveryFee = calcularFretePorDistancia(distancia);
+
+    $("pixProducts").textContent = money(cartTotal());
+    $("pixDelivery").textContent = money(deliveryFee);
+    $("pixAmount").textContent = money(cartTotal() + deliveryFee);
+
+    showToast(`Frete: R$ ${deliveryFee.toFixed(2)} (Aprox. ${distancia.toFixed(1)}km de ${nomeOrigem})`);
+}
+
 /* =========================================
    RENDERIZAÇÃO E CARRINHO
 ========================================= */
@@ -458,7 +487,11 @@ function sendWhatsApp() {
     if (!phone) { showToast("Informe seu celular!"); $("customerPhone").focus(); return; }
     if (delivery === "Entrega" && !cep) { showToast("Informe seu CEP!"); $("customerCep").focus(); return; }
     if (delivery === "Entrega" && !address) { showToast("Informe seu endereço!"); $("customerAddress").focus(); return; }
-    if (delivery === "Entrega" && deliveryFee === 0) { showToast("Aguarde o cálculo do frete."); $("customerCep").focus(); return; }
+    if (delivery === "Entrega" && deliveryFee === 0) { 
+        showToast("Aguarde o frete ou clique em 'Usar minha localização'."); 
+        $("btnLocation").focus(); 
+        return; 
+    }
 
     saveCustomer({ name, phone, cep, address, delivery, orderNote });
     const totalComEntrega = cartTotal() + deliveryFee;
@@ -551,12 +584,20 @@ function setupEvents() {
         mainNav.querySelectorAll("a").forEach(link => link.addEventListener("click", () => mainNav.classList.remove("active")));
     }
 
-    // Cálculo por CEP
+        // Cálculo por CEP e GPS
     const cepInput = $("customerCep");
     if (cepInput) {
         cepInput.addEventListener("blur", (e) => {
             const cep = e.target.value.replace(/\D/g, '');
             if (cep.length === 8) calcularFretePeloCEP(cep);
+        });
+    }
+
+    // ADICIONE ESTE BLOCO DO BOTÃO GPS
+    const btnLocation = $("btnLocation");
+    if (btnLocation) {
+        btnLocation.addEventListener("click", () => {
+            calcularFretePeloGPS();
         });
     }
 
