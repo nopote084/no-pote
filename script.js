@@ -542,15 +542,48 @@ function setupEvents() {
         });
     }
 
-     // --- LÓGICA DO PAINEL ADMIN ---
+       // --- LÓGICA DO PAINEL ADMIN COM SENHA ---
+    const SENHA_ADMIN = "es@admin2026"; // Senha definida aqui
+
     const adminTrigger = $("adminTrigger");
     if(adminTrigger) {
         adminTrigger.addEventListener("click", () => {
-            renderAdminList();
-            if($("adminToggleSaoGoncalo")) {
-                $("adminToggleSaoGoncalo").checked = isSaoGoncalo;
-            }
+            // Sempre mostra a tela de senha ao abrir
+            $("adminPanel").style.display = "none";
+            $("adminPasswordScreen").style.display = "block";
+            $("adminPasswordInput").value = "";
             openModal("adminModal");
+        });
+    }
+
+    const btnConfirmAdminPassword = $("btnConfirmAdminPassword");
+    if (btnConfirmAdminPassword) {
+        btnConfirmAdminPassword.addEventListener("click", () => {
+            const senhaDigitada = $("adminPasswordInput").value;
+            if (senhaDigitada === SENHA_ADMIN) {
+                // Senha correta: abre o painel
+                $("adminPasswordScreen").style.display = "none";
+                $("adminPanel").style.display = "block";
+                renderAdminList();
+                if($("adminToggleSaoGoncalo")) {
+                    $("adminToggleSaoGoncalo").checked = isSaoGoncalo;
+                }
+            } else {
+                showToast("Senha incorreta!");
+                $("adminPasswordInput").value = "";
+                $("adminPasswordInput").focus();
+            }
+        });
+    }
+
+    const btnLogoutAdmin = $("btnLogoutAdmin");
+    if (btnLogoutAdmin) {
+        btnLogoutAdmin.addEventListener("click", () => {
+            // Volta para a tela de senha
+            $("adminPanel").style.display = "none";
+            $("adminPasswordScreen").style.display = "block";
+            $("adminPasswordInput").value = "";
+            showToast("Você saiu do painel.");
         });
     }
 
@@ -607,6 +640,8 @@ function setupEvents() {
             });
         });
     }
+}
+
 
 /* =========================================
    INICIALIZAÇÃO
@@ -628,3 +663,4 @@ if (document.readyState === "loading") {
 } else {
     init();
 }
+
