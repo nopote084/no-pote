@@ -403,9 +403,9 @@ function changeCartItem(key, amount) {
     renderCart();
 }
 
-function saveCart() { localStorage.setItem(STORAGE_CART, JSON.stringify(cart)); }
+function saveCart() { sessionStorage.setItem(STORAGE_CART, JSON.stringify(cart)); }
 function loadCart() {
-    const saved = localStorage.getItem(STORAGE_CART);
+    const saved = sessionStorage.getItem(STORAGE_CART);
     if (saved) cart = JSON.parse(saved);
 }
 function saveCustomer(data) { localStorage.setItem(STORAGE_CUSTOMER, JSON.stringify(data)); }
