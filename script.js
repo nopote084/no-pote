@@ -112,17 +112,44 @@ function renderAdminList() {
     if (!list) return;
     
     list.innerHTML = PRODUCTS.map(p => `
-        <div style="display: flex; justify-content: space-between; align-items: center; background: #fff; border: 1px solid #ddd; padding: 10px; border-radius: 8px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; background: #fff; border: 1px solid #ddd; padding: 10px; border-radius: 8px; margin-bottom: 8px;">
             <div>
                 <strong style="font-size: 0.9rem;">${p.name}</strong><br>
                 <small style="color: var(--red);">R$ ${p.price.toFixed(2)} - ${p.category}</small>
             </div>
-            <button onclick="window.deleteProduct('${p.id}')" style="background: #ff4d4d; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">Excluir</button>
+            <div style="display: flex; gap: 5px;">
+                <button onclick="window.editProduct('${p.id}')" style="background: #ffcf05; color: #333; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">Editar</button>
+                <button onclick="window.deleteProduct('${p.id}')" style="background: #ff4d4d; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">Excluir</button>
+            </div>
         </div>
     `).join("");
 }
 
-// Função global para o botão de excluir
+// Variável para saber se estamos editando
+let editingProductId = null;
+
+// Função para preencher o formulário ao clicar em Editar
+window.editProduct = (id) => {
+    const product = PRODUCTS.find(p => p.id === id);
+    if (!product) return;
+
+    editingProductId = id; // Guarda o ID que está sendo editado
+
+    // Preenche os campos do admin
+    $("adminName").value = product.name;
+    $("adminPrice").value = product.price;
+    $("adminDesc").value = product.description;
+    $("adminImg").value = product.image;
+    $("adminCat").value = product.category;
+
+    // Muda o texto do botão para "Atualizar"
+    $("btnSaveProduct").textContent = "Atualizar Produto";
+    
+    // Rola a tela para o topo do formulário
+    $("adminName").scrollIntoView({ behavior: 'smooth' });
+};
+
+// Função global para o botão de excluir (já existia)
 window.deleteProduct = (id) => {
     if (confirm("Tem certeza que deseja excluir este produto?")) {
         PRODUCTS = PRODUCTS.filter(p => p.id !== id);
@@ -160,14 +187,26 @@ function calcularFretePorDistancia(km) {
 async function calcularFretePeloCEP(cep) {
     try {
         showToast("Calculando frete...");
-        const response = await fetch(`https://nominatim.openstreetmap.org/search?postalcode=${cep}&country=Brazil&format=json&limit=1`);
+        
+        // 1. Busca o endereço no ViaCEP
+        const viaCepResponse = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+        const viaCepData = await viaCepResponse.json();
+
+        if (viaCepData.erro) {
+            showToast("CEP não encontrado. Verifique o número.");
+            return;
+        }
+
+        // 2. Monta o endereço para buscar no OpenStreetMap
+        const enderecoCompleto = `${viaCepData.logradouro}, ${viaCepData.localidade}, ${viaCepData.uf}, Brazil`;
+        
+        const response = await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(enderecoCompleto)}&format=json&limit=1`);
         const data = await response.json();
 
         if (data.length > 0) {
             const clienteLat = parseFloat(data[0].lat);
             const clienteLng = parseFloat(data[0].lon);
 
-            // Verifica qual endereço usar baseado na configuração salva
             const origem = isSaoGoncalo ? ENDERECO_2 : ENDERECO_1;
             const nomeOrigem = isSaoGoncalo ? "São Gonçalo" : "Potengi";
 
@@ -180,14 +219,13 @@ async function calcularFretePeloCEP(cep) {
 
             showToast(`Frete: R$ ${deliveryFee.toFixed(2)} (Saindo de ${nomeOrigem})`);
         } else {
-            showToast("CEP não encontrado. Digite novamente.");
+            showToast("Não foi possível achar a localização exata. Tente novamente.");
         }
     } catch (error) {
         console.error(error);
         showToast("Erro de conexão. Verifique sua internet.");
     }
 }
-
 /* =========================================
    RENDERIZAÇÃO E CARRINHO
 ========================================= */
@@ -587,7 +625,7 @@ function setupEvents() {
         });
     }
 
-    // Salvar novo produto no Admin
+        // Salvar ou Atualizar produto no Admin
     const btnSaveProduct = $("btnSaveProduct");
     if(btnSaveProduct) {
         btnSaveProduct.addEventListener("click", () => {
@@ -599,27 +637,46 @@ function setupEvents() {
 
             if(!name || !price || !img) return showToast("Preencha nome, preço e imagem.");
 
-            const newProduct = {
-                id: "prod-" + Date.now(),
-                name: name,
-                size: cat === 'mini' ? '140ml' : '350ml',
-                price: price,
-                description: desc,
-                image: img,
-                category: cat
-            };
+            if (editingProductId) {
+                // MODO EDIÇÃO: Encontra o produto e atualiza
+                const index = PRODUCTS.findIndex(p => p.id === editingProductId);
+                if (index !== -1) {
+                    PRODUCTS[index] = {
+                        ...PRODUCTS[index], // Mantém o ID
+                        name: name,
+                        price: price,
+                        description: desc,
+                        image: img,
+                        category: cat,
+                        size: cat === 'mini' ? '140ml' : '350ml'
+                    };
+                }
+                showToast("Produto atualizado!");
+                editingProductId = null; // Reseta o modo edição
+                $("btnSaveProduct").textContent = "Salvar Produto"; // Volta o texto do botão
+            } else {
+                // MODO CRIAÇÃO: Cria um novo produto
+                const newProduct = {
+                    id: "prod-" + Date.now(),
+                    name: name,
+                    size: cat === 'mini' ? '140ml' : '350ml',
+                    price: price,
+                    description: desc,
+                    image: img,
+                    category: cat
+                };
+                PRODUCTS.push(newProduct);
+                showToast("Produto adicionado!");
+            }
 
-            PRODUCTS.push(newProduct);
             saveProducts();
             renderProducts();
             renderAdminList();
-            showToast("Produto adicionado!");
             
             // Limpa os campos
             $("adminName").value = ""; $("adminPrice").value = ""; $("adminDesc").value = ""; $("adminImg").value = "";
         });
     }
-
     // Mudar de endereço no Admin
     const adminToggleSaoGoncalo = $("adminToggleSaoGoncalo");
     if(adminToggleSaoGoncalo) {
