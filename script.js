@@ -38,7 +38,9 @@ let quantity = 1;
 let selectedFlavors = [];
 let is750 = false;
 let deliveryFee = 0;
-let isSaoGoncalo = false; // Controla qual endereço usar
+//TROCA AQUIIIIII 
+
+let isSaoGoncalo = true; // Controla qual endereço usar
 
 const FLAVORS_750 = ["Tradicional", "Frango Cremoso", "Misto", "Calabresa"];
 
